@@ -1,54 +1,30 @@
 import * as t from 'three'
 
+const renderer = new t.WebGLRenderer()
 const scene = new t.Scene()
 const camera = new t.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000)
-scene.add(camera)
-
-const renderer = new t.WebGLRenderer()
 
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
-const material = new t.LineBasicMaterial({ color: 0xff0000 })
+const cubeGeometry = new t.BoxGeometry(10, 10, 10)
+const edgesGeometry = new t.EdgesGeometry(cubeGeometry)
+const lineMaterial = new t.MeshBasicMaterial({ color: 0xff0000 })
+const cube = new t.LineSegments(edgesGeometry, lineMaterial)
 
-const points = []
-points.push(new t.Vector3(0, 0, 0))
-points.push(new t.Vector3(10, 0, 0))
-points.push(new t.Vector3(10, 10, 0))
-points.push(new t.Vector3(0, 10, 0))
-points.push(new t.Vector3(0, 0, 0))
-points.push(new t.Vector3(0, 0, 10))
-points.push(new t.Vector3(0, 10, 10))
-points.push(new t.Vector3(10, 10, 10))
-points.push(new t.Vector3(10, 0, 10))
-points.push(new t.Vector3(0, 0, 10))
-points.push(new t.Vector3(0, 10, 10))
-points.push(new t.Vector3(0, 10, 0))
-points.push(new t.Vector3(0, 10, 0))
-points.push(new t.Vector3(10, 10, 0))
-points.push(new t.Vector3(10, 10, 10))
-points.push(new t.Vector3(10, 0, 10))
-points.push(new t.Vector3(10, 0, 0))
-const cubeGeometry = new t.BufferGeometry().setFromPoints(points)
-
-const cube = new t.Line(cubeGeometry, material)
-const group = new t.Group()
-
-cube.position.set(-5, -5, -5)
-
-group.position.z -= 20
-group.rotation.x += 0.5
-
-group.add(cube)
-scene.add(group)
+cube.position.z -= 20
+cube.rotation.x += 0.5
 
 let rDelta = 0
 let mouseDowned = false
 
+scene.add(camera)
+scene.add(cube)
+
 function animate() {
   renderer.render(scene, camera)
 
-  group.rotation.y += Number(rDelta)
+  cube.rotation.y += Number(rDelta)
 
   if (rDelta > 0.001) rDelta -= 0.001
   if (rDelta < -0.001) rDelta += 0.001

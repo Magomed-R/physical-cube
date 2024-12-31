@@ -1,15 +1,17 @@
 {
-  "name": "threejs",
+  "name": "physical-cube",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Просто 3D куб, наделённый небольшой физикой вращения",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "vite ./src",
+    "start:prod":  "serve ./dist -p 4000",
+    "build": "vite build"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Magomed-R",
   "license": "ISC",
   "dependencies": {
+    "serve": "^14.2.4",
     "three": "^0.172.0"
   },
   "devDependencies": {
